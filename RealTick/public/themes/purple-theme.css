@@ -1,0 +1,52 @@
+/* purple-theme.css */
+:root {
+    --background-color: #424874;      
+     
+    --text-color: #F4EEFF;              
+    --text-color-hovered: #a6b1e1;      
+    --text-color-visited: #7f87ad;      
+
+    --button-background: #a6b1e1;       
+    --button-hover-background: #DCD6F7; 
+
+    --input-background: #A6B1E1;        
+    --placeholder-color: #a6b1e1;      
+
+    --title-background: #424874;        
+    --data-point-background: #A6B1E1;   
+
+    --container-background: #32365a;    
+    --container-background-hover: #2b2e4d; 
+
+    --positive: rgb(0, 255, 0);                
+    --negative: red;               
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+button {
+    background-color: var(--button-background);
+    color: var(--text-color);
+}
+
+input {
+    background-color: var(--input-background);
+    color: var(--text-color);
+}
+
+input::placeholder {
+    color: var(--placeholder-color);
+}
+
+a:hover {
+    color: var(--text-color-hovered);
+}
+
+a:visited {
+    color: var(--text-color-visited);
+}
+
+/* Additional styles for watchlist, similar items panel, charts, etc., might be needed. */
