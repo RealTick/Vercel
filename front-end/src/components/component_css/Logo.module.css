@@ -1,0 +1,22 @@
+/* Logo.module.css */
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--input-background);    
+    border-radius:10px;
+}
+
+.refreshButton {
+    display:flex;
+    background-color: transparent;
+    border: transparent;
+    padding:5px;
+    flex-grow:1;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.refreshButton:hover {
+    background-color: transparent;
+}

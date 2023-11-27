@@ -1,0 +1,22 @@
+/* bodyWrapper.css */
+:root {
+  --gap: 10px;
+}
+
+.bodyWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap);
+    padding: 1rem;
+    width: 100%;
+    margin: auto;
+    margin-top: 6%;
+  }
+  
+@media (max-width: 768px) {
+  .bodyWrapper {
+    gap: var(--gap);
+  }
+}
