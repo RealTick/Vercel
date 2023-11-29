@@ -106,7 +106,7 @@ const StockInfo = ({ symbol, data }) => {
 
           <div className={styles.dataPoint}>
             <span className={styles.dataTitle}>
-              Forward <br></br> Dividend & Yield:
+              Dividend
             </span>
             <span className={styles.dataValue}>
               {data.forward_dividend_yield}
