@@ -5,6 +5,10 @@ import {
   IconChartCandle,
   IconChartCandleFilled,
   IconChartArea,
+  IconChartSankey,
+  IconChartDots3,
+  IconTimeline,
+  IconTrendingUp,
 } from "@tabler/icons-react";
 import styles from "./component_css/ChartContainer.module.css";
 
@@ -46,17 +50,37 @@ function ChartSelector({ onChartTypeChange }) {
         >
           <IconChartCandleFilled size={24} stroke={2} /> OHLC
         </div>
-        <div
+        {/* <div
           onClick={() => handleChartTypeChange("area")}
           className={styles.dropdownItem}
         >
           <IconChartArea size={24} stroke={2} /> Area
+        </div> */}
+        <div
+          onClick={() => handleChartTypeChange("ichimoku")}
+          className={styles.dropdownItem}
+        >
+          <IconTrendingUp size={24} stroke={2} /> Ichimoku
         </div>
+
+
         <div
           onClick={() => handleChartTypeChange("realtime")}
           className={styles.dropdownItem}
         >
-          <IconChartArea size={24} stroke={2} /> Realtime
+          <IconTimeline size={24} stroke={2} /> Realtime
+        </div>
+        <div
+          onClick={() => handleChartTypeChange("advancedline")}
+          className={styles.dropdownItem}
+        >
+          <IconChartDots3 size={24} stroke={2} /> Advanced
+        </div>
+        <div
+          onClick={() => handleChartTypeChange("comparetochart")}
+          className={styles.dropdownItem}
+        >
+          <IconChartSankey size={24} stroke={2} /> Compare
         </div>
       </div>
     </div>

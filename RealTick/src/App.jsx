@@ -6,7 +6,7 @@ import "./App.css";
 import fetchData from "./components/StockService";
 import fetchRealTimeData from "./components/StockRealTimeService"; //REAL TIME DATA
 import StockInfo from "./components/StockInfo";
-import ErrorMessage from "./components/ErrorMessage";
+import ErrorMessage from "./components/errorMessage";
 import Search from "./components/Search";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemeLoader from "../public/themes/ThemeLoader";
@@ -19,6 +19,7 @@ import "./components/component_css/bodyWrapper.css";
 import "./components/component_css/headerWrapper.css";
 import ChartContainer from "./components/ChartContainer";
 import Settings from "./components/Settings";
+import CompareTo from "./components/CompareTo";
 
 function App() {
   const [inputSymbol, setInputSymbol] = useState("");
@@ -150,23 +151,24 @@ function App() {
                 />
               </div>
             )}
+            <div className="verticalWrapper">
+              <div className="reccomenderContainer">
+                {data && (
+                  <Reccomender
+                    similarStocks={data.similar_stocks}
+                    handleFetchData={handleFetchData}
+                  />
+                )}
+              </div>
 
-            <div className="reccomenderContainer">
-              {data && (
-                <Reccomender
-                  similarStocks={data.similar_stocks}
-                  handleFetchData={handleFetchData}
-                />
-              )}
-            </div>
-
-            <div className="trendingContainer">
-              {data && (
-                <Trending
-                  trendingStocks={data.trending_stocks}
-                  handleFetchData={handleFetchData}
-                />
-              )}
+              <div className="trendingContainer">
+                {data && (
+                  <Trending
+                    trendingStocks={data.trending_stocks}
+                    handleFetchData={handleFetchData}
+                  />
+                )}
+              </div>
             </div>
           </div>
 

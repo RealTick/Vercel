@@ -1,8 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
+import Exporting from "highcharts/modules/exporting";
+import IndicatorsAll from "highcharts/indicators/indicators-all";
 
-function AreaChart({ chartData }) {
+
+// Apply the modules
+Exporting(Highcharts);
+IndicatorsAll(Highcharts); 
+
+// IndicatorsAll(Highcharts);
+// DragPanes(Highcharts);
+// AnnotationsAdvanced(Highcharts);
+// PriceIndicator(Highcharts);
+// FullScreen(Highcharts);
+// StockTools(Highcharts);
+
+function Ichimoku({ chartData }) {
   const computedStyle = getComputedStyle(document.documentElement);
   const paper_bgcolor_theme = computedStyle
     .getPropertyValue(`--background-color`)
@@ -26,6 +40,8 @@ function AreaChart({ chartData }) {
     chartData[date].low,
     chartData[date].close,
   ]);
+  
+  
 
   const volumeData = dates.map((date) => [
     new Date(date).getTime(), // convert date -> timestamp
@@ -106,7 +122,7 @@ function AreaChart({ chartData }) {
     yAxis: [
       {
         title: {
-          text: "Open Price",
+          text: "OHLC",
           style: {
             color: text_color_theme,
           },
@@ -142,8 +158,9 @@ function AreaChart({ chartData }) {
     ],
     series: [
       {
-        type: "area",
-        name: "Stock Price",
+        id: "ohlc",
+        type: "ohlc",
+        name: "Asset Price",
         data: ohlc_data,
       },
       {
@@ -152,6 +169,44 @@ function AreaChart({ chartData }) {
         data: volumeData,
         yAxis: 1,
       },
+      {
+        type: 'ikh',
+        linkedTo: 'ohlc',
+        tenkanLine: {
+            styles: {
+                lineColor: 'lightblue'
+            }
+        },
+        kijunLine: {
+            styles: {
+                lineColor: 'darkred'
+            }
+        },
+        chikouLine: {
+            styles: {
+                lineColor: 'lightgreen'
+            }
+        },
+        senkouSpanA: {
+            styles: {
+                lineColor: 'rgba(42, 252, 0,1)'
+            }
+        },
+        senkouSpanB: {
+            styles: {
+                lineColor: 'red'
+            }
+        },
+        senkouSpan: {
+            color: 'rgba(0, 255, 0, 0.3)',
+            styles: {
+                fill: 'rgba(0, 0, 255, 0.1)'
+            }
+        }
+      }
+
+      
+
     ],
     responsive: {
       rules: [
@@ -184,4 +239,4 @@ function AreaChart({ chartData }) {
   );
 }
 
-export default React.memo(AreaChart);
+export default React.memo(Ichimoku);

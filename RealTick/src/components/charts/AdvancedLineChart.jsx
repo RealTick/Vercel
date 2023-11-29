@@ -1,8 +1,26 @@
 import React, { useContext } from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
+import Exporting from "highcharts/modules/exporting";
+import IndicatorsAll from "highcharts/indicators/indicators-all";
+import DragPanes from "highcharts/modules/drag-panes";
+import AnnotationsAdvanced from "highcharts/modules/annotations-advanced";
+import PriceIndicator from "highcharts/modules/price-indicator";
+import FullScreen from "highcharts/modules/full-screen";
+import StockTools from "highcharts/modules/stock-tools";
 
-function AreaChart({ chartData }) {
+// Apply the modules
+Exporting(Highcharts);
+IndicatorsAll(Highcharts);
+
+// IndicatorsAll(Highcharts);
+// DragPanes(Highcharts);
+// AnnotationsAdvanced(Highcharts);
+// PriceIndicator(Highcharts);
+// FullScreen(Highcharts);
+// StockTools(Highcharts);
+
+function AdvancedLineChart({ chartData }) {
   const computedStyle = getComputedStyle(document.documentElement);
   const paper_bgcolor_theme = computedStyle
     .getPropertyValue(`--background-color`)
@@ -106,7 +124,7 @@ function AreaChart({ chartData }) {
     yAxis: [
       {
         title: {
-          text: "Open Price",
+          text: "OHLC",
           style: {
             color: text_color_theme,
           },
@@ -142,8 +160,9 @@ function AreaChart({ chartData }) {
     ],
     series: [
       {
-        type: "area",
-        name: "Stock Price",
+        type: "ohlc",
+        id: "ohlc-data", 
+        name: "Asset Price",
         data: ohlc_data,
       },
       {
@@ -152,6 +171,11 @@ function AreaChart({ chartData }) {
         data: volumeData,
         yAxis: 1,
       },
+      {
+        type: 'bb', // Bollinger Bands
+        linkedTo: 'ohlc-data', // Link to the OHLC series
+        
+      }
     ],
     responsive: {
       rules: [
@@ -184,4 +208,4 @@ function AreaChart({ chartData }) {
   );
 }
 
-export default React.memo(AreaChart);
+export default React.memo(AdvancedLineChart);

@@ -7,6 +7,11 @@ import { IconLoader } from "@tabler/icons-react";
 import Exporting from "highcharts/modules/exporting";
 Exporting(Highcharts);
 
+Highcharts.setOptions({
+  global: {
+    useUTC: true
+  }
+});
 function RealtimeChart({ chartData, symbol }) {
   const [seriesData, setSeriesData] = useState([]);
   const chartRef = useRef(null);
@@ -78,7 +83,7 @@ function RealtimeChart({ chartData, symbol }) {
   const options = {
     chart: {
       type: "line",
-      height: 585,
+      height: 575,
       events: {
         load: function () {
           chartRef.current = this;
