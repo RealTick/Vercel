@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
-import Plot from "react-plotly.js";
+import React from "react";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
-import { ThemeContext } from "../../contexts/ThemeContext";
 
-////////HIGHCHARTS
-function CandlestickChart({ chartData }) {
+function CompareChart({ chartData }) {
   const computedStyle = getComputedStyle(document.documentElement);
   const paper_bgcolor_theme = computedStyle
     .getPropertyValue(`--background-color`)
@@ -20,23 +17,41 @@ function CandlestickChart({ chartData }) {
     .getPropertyValue(`--button-hover-background`)
     .trim();
 
-  const dates = Object.keys(chartData || {});
+  // Process the data for each stock symbol into its own series
+  const seriesData = Object.entries(chartData || {}).map(([symbol, data]) => {
+    const dataPoints = Object.entries(data || {}).map(([date, value]) => {
+      return [
+        new Date(date).getTime(), // Date as timestamp
+        value.percentage_change, // Percentage change for the day
+      ];
+    });
 
-  const candlestickData = dates.map((date) => [
-    new Date(date).getTime(), // convert date -> timestamp
-    chartData[date].open,
-    chartData[date].high,
-    chartData[date].low,
-    chartData[date].close,
-  ]);
-
-  const volumeData = dates.map((date) => [
-    new Date(date).getTime(), // convert date -> timestamp
-    chartData[date].volume,
-  ]);
+    return {
+      name: symbol,
+      data: dataPoints,
+    };
+  });
 
   const options = {
+    rangeSelector: {
+      selected: 1,
+      buttonTheme: {
+        fill: button_bgcolor,
+        style: {
+          color: text_color_theme,
+        },
+        states: {
+          hover: {
+            fill: button_activecolor,
+          },
+          select: {
+            fill: button_activecolor,
+          },
+        },
+      },
+    },
     chart: {
+      type: "line",
       height: 575,
       backgroundColor: paper_bgcolor_theme,
       style: {
@@ -44,12 +59,20 @@ function CandlestickChart({ chartData }) {
         color: text_color_theme,
       },
     },
-    plotOptions: {
-      candlestick: {
-        // color: "pink",
-        // lineColor: "red",
-        // upColor: "lightgreen",
-        // upLineColor: "green",
+    title: {
+      text: "Daily Percentage Change Over Time",
+      style: {
+        color: text_color_theme,
+      },
+    },
+    xAxis: {
+      type: "datetime",
+      lineColor: text_color_theme,
+      lineWidth: 1,
+      labels: {
+        style: {
+          color: text_color_theme,
+        },
       },
     },
     exporting: {
@@ -68,94 +91,26 @@ function CandlestickChart({ chartData }) {
         },
       },
     },
-    rangeSelector: {
-      selected: 1,
-      buttonTheme: {
-        fill: button_bgcolor,
-        style: {
-          color: text_color_theme,
-        },
-        states: {
-          hover: {
-            fill: button_activecolor,
-          },
-          select: {
-            fill: button_activecolor,
-          },
-        },
-      },
-    },
-    title: {
-      text: "Asset Price and Volume over Time",
-      style: {
-        color: text_color_theme,
-      },
-    },
-    xAxis: {
+    yAxis: {
       title: {
+        text: "Percentage Change",
         style: {
           color: text_color_theme,
         },
       },
-      type: "datetime",
-      lineColor: text_color_theme,
-      lineWidth: 1,
       labels: {
         style: {
           color: text_color_theme,
         },
       },
+      height: "60%",
+      lineWidth: 2,
+      resize: {
+        enabled: true,
+      },
+      gridLineColor: button_bgcolor,
     },
-    yAxis: [
-      {
-        title: {
-          text: "Open Price",
-          style: {
-            color: text_color_theme,
-          },
-        },
-        labels: {
-          align: "right",
-          x: -3,
-          style: {
-            color: text_color_theme,
-          },
-        },
-        height: "60%",
-        lineWidth: 2,
-        resize: {
-          enabled: true,
-        },
-        gridLineColor: button_bgcolor,
-      },
-      {
-        labels: {
-          align: "right",
-          x: -3,
-          style: {
-            color: text_color_theme,
-          },
-        },
-        top: "65%",
-        height: "35%",
-        offset: 0,
-        lineWidth: 2,
-        gridLineColor: button_bgcolor,
-      },
-    ],
-    series: [
-      {
-        type: "candlestick",
-        name: "Stock Price",
-        data: candlestickData,
-      },
-      {
-        type: "column",
-        name: "Volume",
-        data: volumeData,
-        yAxis: 1,
-      },
-    ],
+    series: seriesData,
     responsive: {
       rules: [
         {
@@ -163,9 +118,8 @@ function CandlestickChart({ chartData }) {
             maxWidth: 500,
           },
           chartOptions: {
-            chart: {},
-            subtitle: {
-              text: null,
+            chart: {
+              height: 600,
             },
             navigator: {
               enabled: false,
@@ -185,4 +139,4 @@ function CandlestickChart({ chartData }) {
   );
 }
 
-export default React.memo(CandlestickChart);
+export default React.memo(CompareChart);
