@@ -1,10 +1,10 @@
 // StockService.jsx
 import axios from "axios";
 
-const fetchData = async (symbol) => {
+const fetchCurrentPriceData = async (symbol) => {
   try {
     const response = await axios.get(
-      `http://127.0.0.1:5000/stock?symbol=${symbol}`
+      `http://127.0.0.1:5000/currentprice?symbol=${symbol}`
     );
     return response.data;
   } catch (err) {
@@ -12,4 +12,4 @@ const fetchData = async (symbol) => {
   }
 };
 
-export default fetchData;
+export default fetchCurrentPriceData;
