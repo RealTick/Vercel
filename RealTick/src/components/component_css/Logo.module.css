@@ -1,41 +1,22 @@
+/* Logo.module.css */
 .logoContainer {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
-    background-color: var(--background-color);
-    padding: 0px 5px 0px 5px;
-    transition: transform 0.2s ease;
-}
-
-.logoContainer:hover{
-    transform: scale(1.05);
-    color: var(--text-color); 
+    background-color: var(--input-background);    
+    border-radius:10px;
 }
 
 .refreshButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:flex;
     background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0px;
-    transition: transform 0.2s ease;
-}
-
-.refreshButton svg {
-    transition: color 0.2s ease;
-    width: 200px; 
-    height: 75px; 
+    border: transparent;
+    padding:5px;
+    flex-grow:1;
+    font-weight: bold;
+    font-size: 30px;
 }
 
 .refreshButton:hover {
-    transform: scale(1.03);
-    color: var(--text-color); 
-}
-
-.refreshButton:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px var(--highlight-color);
+    background-color: transparent;
 }

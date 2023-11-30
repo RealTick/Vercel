@@ -4,25 +4,15 @@ import HighchartsReact from "highcharts-react-official";
 
 function CompareChart({ chartData }) {
   const computedStyle = getComputedStyle(document.documentElement);
-  const paper_bgcolor_theme = computedStyle
-    .getPropertyValue(`--background-color`)
-    .trim();
-  const text_color_theme = computedStyle
-    .getPropertyValue(`--text-color`)
-    .trim();
-  const button_bgcolor = computedStyle
-    .getPropertyValue(`--button-background`)
-    .trim();
-  const button_activecolor = computedStyle
-    .getPropertyValue(`--button-hover-background`)
-    .trim();
+  const paper_bgcolor_theme = computedStyle.getPropertyValue(`--background-color`).trim();
+  const text_color_theme = computedStyle.getPropertyValue(`--text-color`).trim();
 
   // Process the data for each stock symbol into its own series
   const seriesData = Object.entries(chartData || {}).map(([symbol, data]) => {
     const dataPoints = Object.entries(data || {}).map(([date, value]) => {
       return [
         new Date(date).getTime(), // Date as timestamp
-        value.percentage_change, // Percentage change for the day
+        value.percentage_change,   // Percentage change for the day
       ];
     });
 
@@ -33,25 +23,8 @@ function CompareChart({ chartData }) {
   });
 
   const options = {
-    rangeSelector: {
-      selected: 1,
-      buttonTheme: {
-        fill: button_bgcolor,
-        style: {
-          color: text_color_theme,
-        },
-        states: {
-          hover: {
-            fill: button_activecolor,
-          },
-          select: {
-            fill: button_activecolor,
-          },
-        },
-      },
-    },
     chart: {
-      type: "line",
+      type: 'line',
       height: 575,
       backgroundColor: paper_bgcolor_theme,
       style: {
@@ -75,22 +48,6 @@ function CompareChart({ chartData }) {
         },
       },
     },
-    exporting: {
-      enabled: true,
-      buttons: {
-        contextButton: {
-          menuItems: [
-            "viewFullscreen",
-            "fullscreen",
-            "printChart",
-            "downloadPNG",
-            "downloadJPEG",
-            "downloadPDF",
-            "downloadSVG",
-          ],
-        },
-      },
-    },
     yAxis: {
       title: {
         text: "Percentage Change",
@@ -103,30 +60,22 @@ function CompareChart({ chartData }) {
           color: text_color_theme,
         },
       },
-      height: "60%",
-      lineWidth: 2,
-      resize: {
-        enabled: true,
-      },
-      gridLineColor: button_bgcolor,
     },
     series: seriesData,
     responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 500,
+      rules: [{
+        condition: {
+          maxWidth: 500,
+        },
+        chartOptions: {
+          chart: {
+            height: 600,
           },
-          chartOptions: {
-            chart: {
-              height: 600,
-            },
-            navigator: {
-              enabled: false,
-            },
+          navigator: {
+            enabled: false,
           },
         },
-      ],
+      }],
     },
   };
 
