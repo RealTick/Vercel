@@ -1,10 +1,10 @@
 // StockService.jsx
 import axios from "axios";
 
-const fetchRealTimeData = async (symbol) => {
+const fetchCurrentPriceData = async (symbol) => {
   try {
     const response = await axios.get(
-      `https://realtick.pythonanywhere.com/realtime_stock?symbol=${symbol}`
+      `https://realtick.pythonanywhere.com/currentprice?symbol=${symbol}`
     );
     return response.data;
   } catch (err) {
@@ -12,4 +12,4 @@ const fetchRealTimeData = async (symbol) => {
   }
 };
 
-export default fetchRealTimeData;
+export default fetchCurrentPriceData;
