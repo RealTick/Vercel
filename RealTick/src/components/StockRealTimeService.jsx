@@ -1,6 +1,7 @@
 // StockService.jsx
 import axios from "axios";
 
+// TODO: implement second url
 const fetchRealTimeData = async (symbol) => {
   try {
     const response = await axios.get(
@@ -12,4 +13,4 @@ const fetchRealTimeData = async (symbol) => {
   }
 };
 
-export default fetchRealTimeData;
+export default fetchRealTimeData; 

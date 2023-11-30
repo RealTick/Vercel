@@ -6,7 +6,7 @@ import "./App.css";
 import fetchData from "./components/StockService";
 import fetchRealTimeData from "./components/StockRealTimeService"; //REAL TIME DATA
 import StockInfo from "./components/StockInfo";
-import ErrorMessage from "./components/errorMessage";
+import ErrorMessage from "./components/ErrorMessage";
 import Search from "./components/Search";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ThemeLoader from "../public/themes/ThemeLoader";
@@ -25,7 +25,6 @@ function App() {
   const [inputSymbol, setInputSymbol] = useState("");
   const [displayedSymbol, setDisplayedSymbol] = useState("");
   const [data, setData] = useState(null);
-  const [chartType, setChartType] = useState("line");
 
   const [error, setError] = useState(null);
   const [query, setQuery] = useState(false);
@@ -33,8 +32,8 @@ function App() {
   const handleFetchData = async (symbolToFetch) => {
     try {
       const response = await fetchData(symbolToFetch);
+
       if (response) {
-        setChartType("line");
         setData(response);
         setError(null);
         setDisplayedSymbol(symbolToFetch); // set it to the symbolToFetch instead of inputSymbol
@@ -138,21 +137,20 @@ function App() {
                 />
               )}
             </div>
+
             <div className="stockDataContainer">
               {data && <StockInfo symbol={displayedSymbol} data={data} />}
               <ErrorMessage error={error} onModalClose={handleErrorClose} />
             </div>
+
             {query && (
               <div className="ChartContainer">
                 <ChartContainer
                   chartData={data?.chart}
                   symbol={displayedSymbol}
-                  chartType={chartType}
-                  setChartType={setChartType}
                 />
               </div>
             )}
-
             <div className="verticalWrapper">
               <div className="reccomenderContainer">
                 {data && (
@@ -162,6 +160,7 @@ function App() {
                   />
                 )}
               </div>
+
               <div className="trendingContainer">
                 {data && (
                   <Trending

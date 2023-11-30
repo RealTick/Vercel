@@ -23,7 +23,7 @@ function Search({ symbol, setSymbol, fetchData }) {
       } else {
         fetchSymbols(query);
       }
-    }, 5),
+    }, 100),
     [cache] // include cache to ensure it uses the latest state, not an old one
   );
 
@@ -40,18 +40,12 @@ function Search({ symbol, setSymbol, fetchData }) {
 
       const data = await response.json();
       const matches = data.bestMatches || [];
-      console.log(matches);
-      const filteredMatches = matches.filter(
-        (match) =>
-          match["4. region"] === "United States" &&
-          match["3. type"] !== "Mutual Fund" &&
-          match["3. type"] !== "ETF"
-      );
+
       setCache((prevCache) => ({
         ...prevCache,
-        [query]: filteredMatches.slice(0, 6), // cache only 6 results
+        [query]: matches.slice(0, 6), // cache only 6 results
       }));
-      setResults(filteredMatches.slice(0, 6)); // display 6 results
+      setResults(matches.slice(0, 6)); // display 6 results
     } catch (error) {
       console.error("Error searching:", error);
     }
@@ -105,7 +99,6 @@ function Search({ symbol, setSymbol, fetchData }) {
     setSymbol(localSymbol); // new symbol to fetch
     fetchData(localSymbol); // fetch new symbol
     setSelectedResult(-1); // clear selectedResult
-    setLocalSymbol(""); // clear the search bar
   };
 
   // cleanup debounce

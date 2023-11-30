@@ -15,9 +15,8 @@
 .chartHeader {
   position: relative;
   justify-content: space-between;
-  align-items: center;
   display: flex;
-  margin-bottom: 5px;
+  padding: 5px;
 }
 
 .settingsIcon {
@@ -47,7 +46,7 @@
 .chartSelectorDropdown {
   position: relative;
   top: 0;
-  left: 1%;
+  left: 5%;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
@@ -67,7 +66,7 @@
 }
 
 .active {
-  transform: scaleX(.95);
+  transform: scaleX(1);
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
