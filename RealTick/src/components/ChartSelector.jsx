@@ -74,7 +74,7 @@ function ChartSelector({ onChartTypeChange }) {
           onClick={() => handleChartTypeChange("advancedline")}
           className={styles.dropdownItem}
         >
-          <IconChartDots3 size={24} stroke={2} /> Advanced
+          <IconChartDots3 size={24} stroke={2} /> BB
         </div>
         <div
           onClick={() => handleChartTypeChange("comparetochart")}
