@@ -1,40 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "./component_css/StockInfo.module.css";
-import fetchCurrentPriceData from "./StockCurrentService";
 
 const StockInfo = ({ symbol, data }) => {
-  const [realTimeData, setRealTimeData] = useState({
-    price_change_percentage: "",
-    real_time_price: 0,
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedData = await fetchCurrentPriceData(symbol);
-        setRealTimeData({
-          price_change_percentage: fetchedData.price_change_percentage,
-          real_time_price: fetchedData.real_time_price,
-        });
-      } catch (err) {
-        console.error("Error fetching stock data:", err);
-      }
-    };
-
-    fetchData();
-    const interval = setInterval(fetchData, 10000); // Fetch data every 60 seconds
-
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, [symbol]);
-
   // delta coloring
-  // const priceDiffClass = realTimeData.price_change_percentage
-  //   .trim()
-  //   .startsWith("+")
-  //   ? styles.positive
-  //   : styles.negative;
-
-  const priceDiffClass = data.price_diff.trim().startsWith("+")
+  const priceDiffClass = data.price_diff.startsWith("+")
     ? styles.positive
     : styles.negative;
 
@@ -42,10 +11,7 @@ const StockInfo = ({ symbol, data }) => {
     <div className={styles.stockDataContainer}>
       <h1 className={styles.title}>
         {data.stock_display_name}{" "}
-        <span className={priceDiffClass}>
-          {/* {realTimeData.price_change_percentage} */}
-          <span className={styles.priceDiffClass}>{data.price_diff}</span>
-        </span>
+        <span className={priceDiffClass}>{data.price_diff}</span>
       </h1>
 
       {/* <div className={styles.dataPoint}>
@@ -59,9 +25,7 @@ const StockInfo = ({ symbol, data }) => {
         <div className={styles.column}>
           <div className={styles.dataPoint}>
             <span className={styles.dataTitle}>Current Price:</span>
-            <span className={styles.dataValue}>
-              {realTimeData.real_time_price}
-            </span>
+            <span className={styles.dataValue}>{data.current_price}</span>
           </div>
 
           <div className={styles.dataPoint}>
@@ -142,7 +106,7 @@ const StockInfo = ({ symbol, data }) => {
 
           <div className={styles.dataPoint}>
             <span className={styles.dataTitle}>
-              Forward <br></br> Dividend & Yield:
+              Dividend
             </span>
             <span className={styles.dataValue}>
               {data.forward_dividend_yield}

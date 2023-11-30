@@ -1,12 +1,19 @@
-import { React } from "react";
+import React from "react";
 import styles from "./component_css/Logo.module.css";
-import LogoSVG from "../assets/realtick_logo_expanded.svg?react";
 
 const Logo = ({ onReset }) => {
+  const data = {
+    text: "RealTick",
+  };
+
+  const handleSubmit = () => {
+    onReset();
+  };
+
   return (
     <div className={styles.logoContainer}>
-      <button onClick={onReset} className={styles.refreshButton}>
-        <LogoSVG />
+      <button onClick={handleSubmit} className={styles.refreshButton}>
+        {data.text}
       </button>
     </div>
   );
